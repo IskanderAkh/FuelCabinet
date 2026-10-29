@@ -1,6 +1,6 @@
 import { ArrowUpRight, Fuel, Gauge, Plus, Wallet, Truck } from 'lucide-react';
 import { fuelEntries } from "@/data/fuel";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceLine } from "recharts";
 import { formatDate } from '@/lib/format';
 
 
@@ -10,6 +10,7 @@ const totalFuel = fuelEntries.reduce((sum, entry) => sum + entry.gallons, 0);
 const totalCost = fuelEntries.reduce((sum, entry) => sum + (entry.gallons * entry.pricePerGallon), 0);
 const averageCost = Math.round(totalCost / totalFuel);
 const maxCount: number = 10;
+const averageDailySpend = totalCost / new Set(fuelEntries.map((entry) => entry.date)).size;
 const formatCurrency = (amount: number) => `$${amount.toFixed(2)}`;
 const dailyFuelSpend = Object.values(
     fuelEntries.reduce<Record<string, { date: string; gallons: number; amount: number }>>((dailySpend, entry) => {
@@ -141,6 +142,17 @@ export default function FuelExpenses() {
                                 <Tooltip content={<FuelToolTip />} />
                                 <Bar dataKey="amount" fill="#3b82f6" stroke="none" activeBar={false} radius={[4, 4, 0, 0]} className="transition-all duration-300 ease-in-out hover:fill-blue-600">
                                 </Bar>
+                                <ReferenceLine
+                                    y={averageDailySpend}
+                                    stroke="#f59e0b"
+                                    strokeDasharray="4 4"
+                                    label={{
+                                        value: `Avg ${formatCurrency(averageDailySpend)}`,
+                                        position: "insideTopRight",
+                                        fill: "#f59e0b",
+                                        fontSize: 12,
+                                    }}
+                                />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>

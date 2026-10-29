@@ -1,3 +1,11 @@
+import TruckList from "@/components/layout/TruckList";
+
+
+// src/pages/DashboardPage.tsx
 export function TrucksPage() {
-  return <div className="rounded-xl border bg-background p-6">Trucks page</div>;
+  return (
+    <div className="space-y-6">
+      <TruckList />
+    </div>
+  );
 }

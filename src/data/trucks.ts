@@ -189,7 +189,7 @@ export const trucks: Truck[] = [
     truckNumber: "TRK-1015",
     driverName: "Brian Wright",
     driverPhone: "+1 (312) 555-8668",
-    status: "idle",
+    status: "maintenance",
     make: "International",
     model: "LT625",
     year: 2022,
